@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="content-layout">
+    <section class="composer-panel">
+      <div class="panel-heading">
+        <p class="eyebrow">Quick capture</p>
+        <h2>Add a task with context.</h2>
+      </div>
+
+      <form id="todo-form" class="todo-form">
+        <label class="field-group field-span-2">
+          <span>Task</span>
+          <input id="task-input" name="task" type="text" placeholder="What needs to get done?" maxlength="120" required>
+        </label>
+
+        <label class="field-group">
+          <span>Category</span>
+          <input id="category-input" name="category" type="text" placeholder="Work, Home, Health" list="category-options" maxlength="40">
+          <datalist id="category-options"></datalist>
+        </label>
+
+        <label class="field-group">
+          <span>Priority</span>
+          <select id="priority-input" name="priority">
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+            <option value="low">Low</option>
+          </select>
+        </label>
+
+        <label class="field-group">
+          <span>Deadline</span>
+          <input id="deadline-input" name="deadline" type="date">
+        </label>
+
+        <label class="field-group">
+          <span>Reminder</span>
+          <input id="reminder-input" name="reminder" type="datetime-local">
+        </label>
+
+        <label class="field-group field-span-2">
+          <span>Notes</span>
+          <textarea id="notes-input" name="notes" rows="3" placeholder="Add details, links, or next steps."></textarea>
+        </label>
+
+        <div class="form-actions field-span-2">
+          <button id="submit-button" type="submit">Add Task</button>
+          <button id="cancel-edit" class="secondary-button" type="button" hidden>Cancel edit</button>
+          <button id="clear-completed" class="ghost-button" type="button">Clear completed</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="workspace-panel">
+      <div class="panel-heading workspace-heading">
+        <div>
+          <p class="eyebrow">Task page</p>
+          <h2>All tasks</h2>
+        </div>
+        <span id="task-count" class="workspace-meta">0 tasks</span>
+      </div>
+
+      <div class="filter-row" role="toolbar" aria-label="Task filters">
+        <button class="filter-button active" type="button" data-filter="all">All</button>
+        <button class="filter-button" type="button" data-filter="open">Open</button>
+        <button class="filter-button" type="button" data-filter="today">Today</button>
+        <button class="filter-button" type="button" data-filter="high">High priority</button>
+        <button class="filter-button" type="button" data-filter="done">Done</button>
+      </div>
+
+      <ul id="todo-list" class="todo-list" aria-live="polite"></ul>
+      <p id="empty-state" class="empty-state">No tasks yet. Start with one small thing.</p>
+    </section>
+  </section>
+{% endblock %}

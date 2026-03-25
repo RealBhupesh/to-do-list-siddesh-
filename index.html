@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>To-Do List</title>
+  <title>Daily Planner</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -16,27 +16,142 @@
 
     <main class="app-card">
       <section class="hero">
-        <p class="eyebrow">Daily planner</p>
-        <h1>Build a calm, clear day.</h1>
-        <p class="hero-copy">made by Siddesh Dhatrak</p>
-      </section>
-
-      <section class="composer">
-        <form id="todo-form" class="todo-form">
-          <label class="sr-only" for="task-input">New task</label>
-          <input id="task-input" name="task" type="text" placeholder="What needs to get done?" maxlength="120" required>
-          <button type="submit">Add Task</button>
-        </form>
-
-        <div class="status-bar">
-          <span id="task-count">0 tasks</span>
-          <button id="clear-completed" class="ghost-button" type="button">Clear completed</button>
+        <div>
+          <p class="eyebrow">Daily planner</p>
+          <h1>Build a calm, clear day.</h1>
+          <p class="hero-copy">Track tasks, reminders, deadlines, and focused work in one planner.</p>
+        </div>
+        <div class="hero-badge">
+          <span class="hero-badge-label">Made by</span>
+          <strong>Siddesh Dhatrak</strong>
         </div>
       </section>
 
-      <section class="list-panel">
-        <ul id="todo-list" class="todo-list" aria-live="polite"></ul>
-        <p id="empty-state" class="empty-state">No tasks yet. Start with one small thing.</p>
+      <section class="overview-grid" aria-label="Planner overview">
+        <article class="overview-card">
+          <span class="overview-label">Open tasks</span>
+          <strong id="open-count" class="overview-value">0</strong>
+          <p class="overview-copy">Work still in progress.</p>
+        </article>
+        <article class="overview-card">
+          <span class="overview-label">Due today</span>
+          <strong id="today-count" class="overview-value">0</strong>
+          <p class="overview-copy">Items that need attention today.</p>
+        </article>
+        <article class="overview-card">
+          <span class="overview-label">Upcoming reminders</span>
+          <strong id="reminder-count" class="overview-value">0</strong>
+          <p class="overview-copy">Scheduled nudges in the next 24 hours.</p>
+        </article>
+        <article class="overview-card accent-card">
+          <span class="overview-label">Top category</span>
+          <strong id="top-category" class="overview-value">None yet</strong>
+          <p class="overview-copy">Where most of your energy is going.</p>
+        </article>
+      </section>
+
+      <section class="planner-layout">
+        <section class="composer-panel">
+          <div class="panel-heading">
+            <p class="eyebrow">Quick capture</p>
+            <h2>Add a task with context.</h2>
+          </div>
+
+          <form id="todo-form" class="todo-form">
+            <label class="field-group field-span-2">
+              <span>Task</span>
+              <input id="task-input" name="task" type="text" placeholder="What needs to get done?" maxlength="120" required>
+            </label>
+
+            <label class="field-group">
+              <span>Category</span>
+              <input id="category-input" name="category" type="text" placeholder="Work, Home, Health" list="category-options" maxlength="40">
+              <datalist id="category-options"></datalist>
+            </label>
+
+            <label class="field-group">
+              <span>Priority</span>
+              <select id="priority-input" name="priority">
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+                <option value="low">Low</option>
+              </select>
+            </label>
+
+            <label class="field-group">
+              <span>Deadline</span>
+              <input id="deadline-input" name="deadline" type="date">
+            </label>
+
+            <label class="field-group">
+              <span>Reminder</span>
+              <input id="reminder-input" name="reminder" type="datetime-local">
+            </label>
+
+            <label class="field-group field-span-2">
+              <span>Notes</span>
+              <textarea id="notes-input" name="notes" rows="3" placeholder="Add details, links, or next steps."></textarea>
+            </label>
+
+            <div class="form-actions field-span-2">
+              <button id="submit-button" type="submit">Add Task</button>
+              <button id="cancel-edit" class="secondary-button" type="button" hidden>Cancel edit</button>
+              <button id="clear-completed" class="ghost-button" type="button">Clear completed</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="workspace-panel">
+          <div class="panel-heading workspace-heading">
+            <div>
+              <p class="eyebrow">Workspace</p>
+              <h2>Your planning pages</h2>
+            </div>
+            <span id="task-count" class="workspace-meta">0 tasks</span>
+          </div>
+
+          <div class="tab-row" role="tablist" aria-label="Planner pages">
+            <button class="tab-button active" type="button" role="tab" data-view="tasks" aria-selected="true">Tasks</button>
+            <button class="tab-button" type="button" role="tab" data-view="agenda" aria-selected="false">Agenda</button>
+            <button class="tab-button" type="button" role="tab" data-view="deadlines" aria-selected="false">Deadlines</button>
+            <button class="tab-button" type="button" role="tab" data-view="reminders" aria-selected="false">Reminders</button>
+            <button class="tab-button" type="button" role="tab" data-view="categories" aria-selected="false">Categories</button>
+          </div>
+
+          <section class="view-panel active" data-panel="tasks" aria-live="polite">
+            <div class="toolbar">
+              <div class="filter-row" role="toolbar" aria-label="Task filters">
+                <button class="filter-button active" type="button" data-filter="all">All</button>
+                <button class="filter-button" type="button" data-filter="open">Open</button>
+                <button class="filter-button" type="button" data-filter="today">Today</button>
+                <button class="filter-button" type="button" data-filter="high">High priority</button>
+                <button class="filter-button" type="button" data-filter="done">Done</button>
+              </div>
+            </div>
+            <ul id="todo-list" class="todo-list"></ul>
+            <p id="empty-state" class="empty-state">No tasks yet. Start with one small thing.</p>
+          </section>
+
+          <section class="view-panel" data-panel="agenda">
+            <div id="agenda-list" class="stack-list"></div>
+            <p id="agenda-empty" class="empty-state">Nothing urgent right now. Add a deadline or reminder to build your day.</p>
+          </section>
+
+          <section class="view-panel" data-panel="deadlines">
+            <div id="deadline-list" class="stack-list"></div>
+            <p id="deadline-empty" class="empty-state">No deadlines scheduled yet.</p>
+          </section>
+
+          <section class="view-panel" data-panel="reminders">
+            <div id="reminder-list" class="stack-list"></div>
+            <p id="reminder-empty" class="empty-state">No reminders set yet.</p>
+          </section>
+
+          <section class="view-panel" data-panel="categories">
+            <div id="category-list" class="category-grid"></div>
+            <p id="category-empty" class="empty-state">Add categories to see where your work clusters.</p>
+          </section>
+        </section>
       </section>
     </main>
   </div>

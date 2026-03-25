@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="single-panel">
+    <div class="panel-heading">
+      <p class="eyebrow">Deadline page</p>
+      <h2>Due dates only</h2>
+      <p class="section-copy">Use this view when you want to focus on due dates and separate urgency from general task management.</p>
+    </div>
+
+    <div id="deadline-list" class="stack-list"></div>
+    <p id="deadline-empty" class="empty-state">No deadlines scheduled yet.</p>
+  </section>
+{% endblock %}

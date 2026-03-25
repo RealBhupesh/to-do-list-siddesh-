@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body data-page="{{ active_page }}">
+  <div class="page-shell">
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+
+    <main class="app-card">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Daily planner</p>
+          <h1>{{ page_title }}</h1>
+          <p class="hero-copy">{{ page_description }}</p>
+        </div>
+        <div class="hero-badge">
+          <span class="hero-badge-label">Made by</span>
+          <strong>Siddesh Dhatrak</strong>
+        </div>
+      </header>
+
+      <nav class="page-nav" aria-label="Planner pages">
+        <a class="nav-link{% if active_page == 'dashboard' %} active{% endif %}" href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a class="nav-link{% if active_page == 'tasks' %} active{% endif %}" href="{{ url_for('tasks_page') }}">Tasks</a>
+        <a class="nav-link{% if active_page == 'agenda' %} active{% endif %}" href="{{ url_for('agenda_page') }}">Agenda</a>
+        <a class="nav-link{% if active_page == 'deadlines' %} active{% endif %}" href="{{ url_for('deadlines_page') }}">Deadlines</a>
+        <a class="nav-link{% if active_page == 'reminders' %} active{% endif %}" href="{{ url_for('reminders_page') }}">Reminders</a>
+        <a class="nav-link{% if active_page == 'categories' %} active{% endif %}" href="{{ url_for('categories_page') }}">Categories</a>
+      </nav>
+
+      <section class="overview-grid" aria-label="Planner overview">
+        <article class="overview-card">
+          <span class="overview-label">Open tasks</span>
+          <strong id="open-count" class="overview-value">0</strong>
+          <p class="overview-copy">Work still in progress.</p>
+        </article>
+        <article class="overview-card">
+          <span class="overview-label">Due today</span>
+          <strong id="today-count" class="overview-value">0</strong>
+          <p class="overview-copy">Items that need attention today.</p>
+        </article>
+        <article class="overview-card">
+          <span class="overview-label">Upcoming reminders</span>
+          <strong id="reminder-count" class="overview-value">0</strong>
+          <p class="overview-copy">Scheduled nudges in the next 24 hours.</p>
+        </article>
+        <article class="overview-card accent-card">
+          <span class="overview-label">Top category</span>
+          <strong id="top-category" class="overview-value">None yet</strong>
+          <p class="overview-copy">Where most of your energy is going.</p>
+        </article>
+      </section>
+
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
